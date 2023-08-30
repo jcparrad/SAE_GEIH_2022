@@ -1,0 +1,16 @@
+library(sf)
+library(ggplot2)
+
+shp <- st_read('L:/Documentos/USTA/Semestre 3/Electiva I - Estimación en áreas pequeñas/Proyectos/Proyecto 2/shape/COL.shp')
+shp$tot <- c(NA,rnorm(28,mean=1000000,sd=3000),NA,NA,NA,NA)
+ggp<-ggplot() +
+  geom_sf(data = shp)+
+  geom_sf(data = shp, aes(fill = tot))+
+  geom_path(color="grey") +
+  scale_fill_gradient(low = "yellow", high = "red",
+                      space = "Lab", na.value = "grey50",
+                      guide = "colourbar")+
+  labs(fill='Tot trabajando')+
+  theme_void() + ggtitle("Total de personas trabajando de generó masculino")
+ggp
+ggsave(plot=ggp,filename='total.png',units = 'in',width = 6,height = 7.5,dpi=300)

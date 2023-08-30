@@ -1,0 +1,133 @@
+,DP,DPNOM,strato,eblup.FH,sexo,clase
+0,5,Antioquia,Antioquia_R_M,123718.88571699699,mujer,rural
+1,5,Antioquia,Antioquia_R_H,340697.293477599,hombre,rural
+2,5,Antioquia,Antioquia_U_M,1030885.58463002,mujer,urbano
+3,5,Antioquia,Antioquia_U_H,1246804.89854692,hombre,urbano
+4,8,Atlantico,Atlantico_R_M,10447.6976633003,mujer,rural
+5,8,Atlantico,Atlantico_R_H,54517.4120984378,hombre,rural
+6,8,Atlantico,Atlantico_U_M,387058.089877409,mujer,urbano
+7,8,Atlantico,Atlantico_U_H,661782.4830861461,hombre,urbano
+8,11,Bogota,Bogota_R_H,5945.6600856583,hombre,rural
+9,11,Bogota,Bogota_R_M,4378.36117331809,mujer,rural
+10,11,Bogota,Bogota_U_M,1630119.41059623,mujer,urbano
+11,11,Bogota,Bogota_U_H,1596830.95371109,hombre,urbano
+12,13,Bolivar,Bolivar_R_M,27224.2973734415,mujer,rural
+13,13,Bolivar,Bolivar_R_H,148821.070006753,hombre,rural
+14,13,Bolivar,Bolivar_U_M,195415.182332102,mujer,urbano
+15,13,Bolivar,Bolivar_U_H,391549.628953591,hombre,urbano
+16,15,Boyaca,Boyaca_R_M,31639.7822502969,mujer,rural
+17,15,Boyaca,Boyaca_U_M,160899.14908730198,mujer,urbano
+18,15,Boyaca,Boyaca_U_H,167725.774879128,hombre,urbano
+19,15,Boyaca,Boyaca_R_H,118114.60971661401,hombre,rural
+20,17,Caldas,Caldas_R_M,16362.2729400628,mujer,rural
+21,17,Caldas,Caldas_R_H,64399.55968163,hombre,rural
+22,17,Caldas,Caldas_U_H,191749.304343216,hombre,urbano
+23,17,Caldas,Caldas_U_M,135195.988283827,mujer,urbano
+24,18,Caqueta,Caqueta_R_M,11859.0803610317,mujer,rural
+25,18,Caqueta,Caqueta_R_H,39861.759722884504,hombre,rural
+26,18,Caqueta,Caqueta_U_H,59971.2537727616,hombre,urbano
+27,18,Caqueta,Caqueta_U_M,41942.0041176311,mujer,urbano
+28,19,Cauca,Cauca_R_M,78948.5216370342,mujer,rural
+29,19,Cauca,Cauca_R_H,178649.245936515,hombre,rural
+30,19,Cauca,Cauca_U_H,118628.55862517301,hombre,urbano
+31,19,Cauca,Cauca_U_M,89328.7842838026,mujer,urbano
+32,20,Cesar,Cesar_R_M,8756.22202903876,mujer,rural
+33,20,Cesar,Cesar_R_H,98144.6414990723,hombre,rural
+34,20,Cesar,Cesar_U_M,117499.75935914,mujer,urbano
+35,20,Cesar,Cesar_U_H,214505.20898716,hombre,urbano
+36,23,Cordoba,Cordoba_R_M,48265.213751505704,mujer,rural
+37,23,Cordoba,Cordoba_U_M,118681.13882841801,mujer,urbano
+38,23,Cordoba,Cordoba_U_H,223388.80142281897,hombre,urbano
+39,23,Cordoba,Cordoba_R_H,200956.350971586,hombre,rural
+40,25,Cundinamarca,Cundinamarca_R_M,75734.3823927135,mujer,rural
+41,25,Cundinamarca,Cundinamarca_U_M,515130.69655154896,mujer,urbano
+42,25,Cundinamarca,Cundinamarca_U_H,627858.145362865,hombre,urbano
+43,25,Cundinamarca,Cundinamarca_R_H,223951.97769375102,hombre,rural
+44,27,Choco,Choco_R_M,9379.26623439168,mujer,rural
+45,27,Choco,Choco_R_H,60554.9790705076,hombre,rural
+46,27,Choco,Choco_U_H,41599.7230969701,hombre,urbano
+47,27,Choco,Choco_U_M,22555.6664158675,mujer,urbano
+48,41,Huila,Huila_R_M,9905.47233529054,mujer,rural
+49,41,Huila,Huila_R_H,132456.89475343,hombre,rural
+50,41,Huila,Huila_U_H,166741.33066995,hombre,urbano
+51,41,Huila,Huila_U_M,101332.33086210699,mujer,urbano
+52,44,La Guajira,La Guajira_R_M,34202.489867912904,mujer,rural
+53,44,La Guajira,La Guajira_R_H,88682.8914320171,hombre,rural
+54,44,La Guajira,La Guajira_U_M,61780.9651448774,mujer,urbano
+55,44,La Guajira,La Guajira_U_H,79651.64802678321,hombre,urbano
+56,47,Magdalena,Magdalena_R_M,31948.518535851297,mujer,rural
+57,47,Magdalena,Magdalena_R_H,125742.885331207,hombre,rural
+58,47,Magdalena,Magdalena_U_H,239532.532345526,hombre,urbano
+59,47,Magdalena,Magdalena_U_M,136180.925037711,mujer,urbano
+60,50,Meta,Meta_R_M,16423.409880529598,mujer,rural
+61,50,Meta,Meta_R_H,62352.7379786258,hombre,rural
+62,50,Meta,Meta_U_M,135649.377087164,mujer,urbano
+63,50,Meta,Meta_U_H,202704.26047521,hombre,urbano
+64,52,Narino,Narino_R_M,93252.42850986119,mujer,rural
+65,52,Narino,Narino_R_H,289509.826959931,hombre,rural
+66,52,Narino,Narino_U_M,136135.325755635,mujer,urbano
+67,52,Narino,Narino_U_H,165501.701626296,hombre,urbano
+68,54,Norte de Santander,Norte de Santander_R_M,10313.3120607207,mujer,rural
+69,54,Norte de Santander,Norte de Santander_R_H,90315.51821477279,hombre,rural
+70,54,Norte de Santander,Norte de Santander_U_M,196014.81355959602,mujer,urbano
+71,54,Norte de Santander,Norte de Santander_U_H,281668.930802276,hombre,urbano
+72,63,Quindio,Quindio_R_M,4527.363286276471,mujer,rural
+73,63,Quindio,Quindio_R_H,19926.101415440102,hombre,rural
+74,63,Quindio,Quindio_U_H,106561.619304034,hombre,urbano
+75,63,Quindio,Quindio_U_M,79207.9543597352,mujer,urbano
+76,66,Risaralda,Risaralda_R_M,14635.2889020054,mujer,rural
+77,66,Risaralda,Risaralda_R_H,52051.4918244653,hombre,rural
+78,66,Risaralda,Risaralda_U_H,188476.50716072,hombre,urbano
+79,66,Risaralda,Risaralda_U_M,142256.132366716,mujer,urbano
+80,68,Santander,Santander_R_M,30194.1987836369,mujer,rural
+81,68,Santander,Santander_R_H,162685.359677217,hombre,rural
+82,68,Santander,Santander_U_M,326707.716549218,mujer,urbano
+83,68,Santander,Santander_U_H,447482.97045105,hombre,urbano
+84,70,Sucre,Sucre_R_M,16514.373244380502,mujer,rural
+85,70,Sucre,Sucre_R_H,96626.4834630627,hombre,rural
+86,70,Sucre,Sucre_U_H,132793.038860208,hombre,urbano
+87,70,Sucre,Sucre_U_M,64740.4780206167,mujer,urbano
+88,73,Tolima,Tolima_R_M,26081.076588122203,mujer,rural
+89,73,Tolima,Tolima_U_H,220866.59799079,hombre,urbano
+90,73,Tolima,Tolima_R_H,124435.252565318,hombre,rural
+91,73,Tolima,Tolima_U_M,135206.449614284,mujer,urbano
+92,76,Valle del Cauca,Valle del Cauca_R_M,84020.7340134639,mujer,rural
+93,76,Valle del Cauca,Valle del Cauca_R_H,183915.406614807,hombre,rural
+94,76,Valle del Cauca,Valle del Cauca_U_M,682092.55323479,mujer,urbano
+95,76,Valle del Cauca,Valle del Cauca_U_H,851167.685298512,hombre,urbano
+96,81,Arauca,Arauca_U_H,19267.9272112405,hombre,urbano
+97,81,Arauca,Arauca_U_M,12811.244362945401,mujer,urbano
+98,81,Arauca,Arauca_R_H,23200.2394861127,hombre,rural
+99,81,Arauca,Arauca_R_M,20771.279893112198,mujer,rural
+100,85,Casanare,Casanare_U_H,39984.0813938146,hombre,urbano
+101,85,Casanare,Casanare_U_M,36462.3804986027,mujer,urbano
+102,85,Casanare,Casanare_R_H,27950.1067239547,hombre,rural
+103,85,Casanare,Casanare_R_M,23946.9628007129,mujer,rural
+104,86,Putumayo,Putumayo_U_H,9294.38976653478,hombre,urbano
+105,86,Putumayo,Putumayo_U_M,6475.46334821531,mujer,urbano
+106,86,Putumayo,Putumayo_R_H,38332.734069725695,hombre,rural
+107,86,Putumayo,Putumayo_R_M,35073.1000202468,mujer,rural
+108,88,Archipielago de San Andres,Archipielago de San Andres_U_H,10526.821584245501,hombre,urbano
+109,88,Archipielago de San Andres,Archipielago de San Andres_U_M,9128.011283172851,mujer,urbano
+110,88,Archipielago de San Andres,Archipielago de San Andres_R_H,3447.2186583645303,hombre,rural
+111,88,Archipielago de San Andres,Archipielago de San Andres_R_M,3771.37450284137,mujer,rural
+112,91,Amazonas,Amazonas_U_H,8103.0751280567,hombre,urbano
+113,91,Amazonas,Amazonas_U_M,5088.36687539022,mujer,urbano
+114,91,Amazonas,Amazonas_R_H,8787.153969981651,hombre,rural
+115,91,Amazonas,Amazonas_R_M,7890.603976335691,mujer,rural
+116,94,Guainia,Guainia_R_H,6393.94390629768,hombre,rural
+117,94,Guainia,Guainia_R_M,5570.0980115988095,mujer,rural
+118,94,Guainia,Guainia_U_M,5096.91884828567,mujer,urbano
+119,94,Guainia,Guainia_U_H,5067.9978807487,hombre,urbano
+120,95,Guaviare,Guaviare_U_H,9843.23900911679,hombre,urbano
+121,95,Guaviare,Guaviare_U_M,8936.57235039956,mujer,urbano
+122,95,Guaviare,Guaviare_R_H,9457.95974479741,hombre,rural
+123,95,Guaviare,Guaviare_R_M,7265.991413558149,mujer,rural
+124,97,Vaupes,Vaupes_U_M,1386.00319764462,mujer,urbano
+125,97,Vaupes,Vaupes_U_H,2635.0004820700697,hombre,urbano
+126,97,Vaupes,Vaupes_R_H,6882.386913588671,hombre,rural
+127,97,Vaupes,Vaupes_R_M,6236.88698536776,mujer,rural
+128,99,Vichada,Vichada_R_H,19394.722174373503,hombre,rural
+129,99,Vichada,Vichada_R_M,17255.3739368473,mujer,rural
+130,99,Vichada,Vichada_U_H,6027.61165082944,hombre,urbano
+131,99,Vichada,Vichada_U_M,5902.28745816925,mujer,urbano
