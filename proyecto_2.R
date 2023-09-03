@@ -1,3 +1,4 @@
+
 #[0] CARGAR LIBRERÍAS-------
 
 library(pacman)
@@ -5,31 +6,32 @@ library(pacman)
 p_load(sae,openxlsx,reshape2,forcats,dplyr,knitr,ggplot2,DT,kableExtra,readr,
        readxl,tidyr,srvyr,samplesize4surveys,survey)
 
-setwd("L:/Documentos/USTA/Semestre 3/Electiva I - Estimación en áreas pequeñas/Proyectos/Proyecto 2")
-#[1] CARGAR DATOS-------
+#[1] LOADING DATA
 base <- read.csv("base_exploracion_desagregada_v5.csv")%>%select(-MUESTRA)
 names(base)
 
-#[2] PREPROCESAMIENTO ------
+#[2] PREPROCESSING
 base$FEX_C18 <- as.integer(base$FEX_C18)
 base$SEXO=ifelse(base$SEXO==1,"Hombre","Mujer")
-## tomando unicamente el mes 12 
+## taking only the 12th month
 base <- filter(base, MES == 12)
 
-#[3] SEPARAR BASE -> MUESTREO-----
+#[3] FILTERING OUT THE DATA BASE
 INF_AUX_0<-base%>%group_by(DPNOM)%>%summarise(n=n(),N=sum(FEX_C18))
 N <- 33
 set.seed(123)
 n <- ss4p(N = N,P = 0.5,DEFF = 1,conf = 0.95,error = "me",delta = 0.05)
-sam <- S.piPS(n, INF_AUX_0$N) #Tamaño de muestra y cantidad de habitantes por departamento
+
+#Sample size and number of inhabitants by department
+sam <- S.piPS(n, INF_AUX_0$N) 
 muestra <- INF_AUX_0[sam[,1],] 
 base<-base %>% mutate(MUESTRA=ifelse(DPNOM %in% muestra$DPNOM,1,0))
 
 base_out <- filter(base, MUESTRA == 0)
 base <- filter(base, MUESTRA == 1)
 
-#[4] ESTIMACION DIRECTA CON POST ESTRATIFICACION----
-# "Guainía" "Vichada" son lss que se sacaron de la
+#[4] DIRECT ESTIMATION WITH POST STRATIFICATION
+# "Guainía" "Vichada" ehere the department that were filtered out
 
 base.des2 <- base %>%
   as_survey_design(#ids = id,
@@ -47,7 +49,7 @@ pers_est3 = dfvf1_para_calibracion_estratificacion#[, c("strato", "FEXC18")]
 pers_est3 <- pers_est3[pers_est3$DPNOM != "Guainia" & pers_est3$DPNOM != "Vichada",]
 pers_est3 = pers_est3[, c("strato", "FEX_C18")]
 
-# cambiando el nombre para poder hacer la calibracion
+#changing the name to be able to do the calibration
 names(pers_est3) = c("strato","Freq")
 
 EM.post <- postStratify(base.des2,
@@ -58,7 +60,7 @@ EM.post <- postStratify(base.des2,
 
 base$wkpost2 <- weights(EM.post)
 
-#Verificación
+#check
 verificacion = base %>% group_by(strato) %>%
   summarise(N.per.est = sum(wkpost2)) %>%
   arrange(desc(N.per.est))
@@ -75,13 +77,13 @@ tot1 = base.des2 %>%
   summarise(N = sum(wkpost2),total = survey_total(trabajando,vartype = c("var","cv", "se"),deff=T)) %>% 
   arrange(desc(total))
 
-#View(tot1)
+View(tot1)
 
 
 nd=base%>%group_by(strato)%>%summarise(nd=n())
 tot1=tot1%>%inner_join(x=.,y=nd,by="strato")
 
-#[5] INFORMACION AUXILIAR------
+#[5] AUXILIARY INFORMATION
 
 informacion_auxiliar <- read_excel("informacion_auxiliar.xlsx",skip = 9)%>%
   filter(AÑO==2022 & `ÁREA GEOGRÁFICA`!="Total")
@@ -109,12 +111,12 @@ for (l in 1:dim(inf_aux_rur)[1]){
 
 PET<-rbind(PET_URB,PET_RUR)
 
-#Incluir información auxiliar del total poblacional de cada región
+#Include auxiliary information on the total population of each region
 informacion_auxiliar_tot=informacion_auxiliar%>%
   mutate(DEPARTAMENTO=as.double(DP),Hombre=`Total Hombres`,Mujer=`Total Mujeres`,CLASE=ifelse(`ÁREA GEOGRÁFICA`=="Cabecera","Urbano","Rural"))%>%
   dplyr::select(c("DEPARTAMENTO","CLASE","Hombre","Mujer"))%>%gather(SEXO,TOTAL,Hombre:Mujer)
 
-# Volver la tabla de manera larga
+# flattenning the table
 total_pet <- pivot_longer(PET, Hombre:Mujer, names_to = "SEXO", values_to = "TOTAL_PET")
 departamentos_codigo <- read_csv("departamentos_codigo.csv")
 total_pet$DEPARTAMENTO=as.double(total_pet$DEPARTAMENTO)
@@ -127,13 +129,12 @@ total_pet=left_join(total_pet,informacion_auxiliar_tot,by=c("DEPARTAMENTO","CLAS
 
 unique(total_pet$DPNOM)
 
-# esto es del proceso de extraccion de informacion auxiliar de los 
-#departamentos que estaban fuera del diseño  #pet (personas en edad de trabajar)
+# This is from the process of extracting auxiliary information from the departments that were outside the design.
 
 total_pet_out <- filter(total_pet, DPNOM == "Guainia" | DPNOM == "Vichada")
 merged_data <- merge(total_pet, tot1, by = "strato")
 
-#[6]SUAVIZAMIENTO DE LA VARIANZA-----
+#[6] VARIANCE SMOOTHING
 
 tot1=tot1%>%inner_join(x=.,y=total_pet,by="strato")
 
@@ -154,14 +155,15 @@ p1 <- ggplot(estimaciones, aes(x = total, y = ln_sigma2)) +
   geom_point() +
   geom_smooth(method = "loess") +
   xlab("trabajando")
-# Tamaño de muestra vs Ln_sigma2 #
+
+# Sample size vs Ln_sigma2#
 
 p2 <- ggplot(estimaciones, aes(x = nd, y = ln_sigma2)) + 
   geom_point() +
   geom_smooth(method = "loess") + 
   xlab("Tamaño de muestra")
 
-# Número de pobres vs Ln_sigma2 #
+# Number of poor vs Ln_sigma2
 
 p3 <- ggplot(estimaciones,aes(x = total * nd, y = ln_sigma2)) + 
   geom_point() +
@@ -186,7 +188,7 @@ estimaciones$var_est = (sum(estimaciones$varianza)/sum(exp(fitted.values(modelo)
 
 ggplot(estimaciones,aes(x=var_est,y=varianza))+geom_point()+theme_minimal()+geom_abline(intercept = 0,slope= 1)
 
-#Predicción no incluidos
+#prediction not included
 
 estimaciones_out=estimaciones2 %>% 
   filter(Flag == "Excluir")%>%
@@ -199,7 +201,7 @@ estimaciones_out$var_est=cons*exp(val_exp_outs)
 
 estimaciones=rbind(estimaciones,estimaciones_out)
 
-#[7.1] Fay Herriot parte 1-----
+#[7.1] Fay Herriot part 1-----
 
 eblup1 = mseFH(estimaciones$total~ -1+estimaciones$TOTAL,
                vardir=as.vector(estimaciones$var_est))
@@ -222,9 +224,9 @@ table(ifelse(estimaciones$diff>=0,1,0))
 
 #View(estimaciones)
 
-#[7.2] Fay Herriot parte 2------
+#[7.2] Fay Herriot part 2------
 
-#[7.2.1] CALCULANDO FH----
+#[7.2.1] getting FH----
 #eblupFH?
 
 eblup1 = eblupFH(estimaciones$total~ -1 + estimaciones$TOTAL ,
@@ -250,10 +252,10 @@ resultados1B$cv_diff <- resultados1B$cv_dir - resultados1B$cv_FH_total
 
 resultados1B = arrange(resultados1B, desc(cv_diff))
 
-# obteniendo datos para latex
+# getting data for latex
 #resultados1B = head(resultados1B, 10)
 #View(resultados1B)
-# pasando la tabla a latex
+# passing the table to latex
 # install.packages("xtable")
 library(xtable)
 # Convert the data frame to a LaTeX table
@@ -299,7 +301,9 @@ ggplot(data_mseIncomePlot, aes(x = strato, y = value))  +
         axis.title.y = element_text(size = 14, family = "Times New Roman")) +
   xlab("Municipio") + ylab("Total trabajadores") +  theme(legend.position=c(0.9,0.5)) +
   coord_flip() + scale_color_grey()
-#[7.2.2] Fay Herriot PREDICCION AREAS NO OBSERVADAS PERO EN EL DISEÑO--------
+
+
+#[7.2.2] Fay Herriot PREDICTION OF UNOBSERVED AREAS BUT IN THE DESIGN--------
 resultados1B
 
 total_pet_samp_out <- total_pet %>% anti_join(.,resultados1B,by="strato") %>%
@@ -307,8 +311,8 @@ total_pet_samp_out <- total_pet %>% anti_join(.,resultados1B,by="strato") %>%
 
 total_pet_samp_out$eblup.FH = eblup1$fit$estcoef$beta[1]*total_pet_samp_out$TOTAL
 
-#[7.3] Fay Herriot PREDICCION AREAS NO OBSERVADAS---------
-# Predicción para áreas no observadas en el diseño fuera de la meustra
+#[7.3] Fay Herriot PREDICTION UNOBSERVED AREAS---------
+# Prediction for unobserved areas in out-of-sample design
 auxiliar_out <- readRDS(file="total_pet_out.RDS")
 View(auxiliar_out)
 
@@ -322,8 +326,8 @@ View(auxiliar_out)
 View(base_out)
 #kable(auxiliar_out[,c("location_code","Municipio", "monthly_wages","distancia_bogotá_google", "horno","eblup")])
 
-# estimaciones directas de los departamento de guiainia y vichada
-# estan en el diseño, pero se sacaron y aqui se viuelven a estimar
+# Direct estimates from the departments of Guainía and Vichada
+# are in the design, but they were removed and here they are estimated again
 base.des_out <- base_out %>%
   as_survey_design( #ids = id,
     #strata = estrato,
@@ -336,16 +340,16 @@ tot_out = base.des_out %>%
   arrange(desc(total))
 
 View(tot_out)
-#[7.4] UNIÓN BASES-----
-#Elementos muestreados
+#[7.4] BASES UNION-----
+#Sampled Elements
 total=resultados1B%>%select(c("strato","eblup.FH"))
 # View(total)
 
-#Elementos no muestreados
+#Unsampled Items
 total_ns=total_pet_samp_out%>%select(c("strato","eblup.FH"))
 # View(total_ns)
 
-#Elementos no muestreados no diseño
+#Non-sampled non-layout elements
 total_ns_nd=auxiliar_out%>%select(c("strato","eblup.FH"))
 # View(total_ns_nd)
 
@@ -354,13 +358,15 @@ View(base_completa)
 # base_completa.to_scv()
 write.csv(base_completa, "base_completa.csv")
 
-#[8] MAPAS-----
-#[8.1] ESTIMADORES DIRECTOS VS ESTIMADORES FH------
-#[8.1.1] ESTIMADORES DIRECTOS RURAL Y URBANO--------
+#[8] MAPS-----
+#[8.1] DIRECT ESTIMATORS VS FH ESTIMATORS------
+#[8.1.1] RURAL AND URBAN DIRECT ESTIMATORS--------
 library(sf)
 library(ggplot2)
 
-shp2 <- st_read('L:/Documentos/USTA/Semestre 3/Electiva I - Estimación en áreas pequeñas/Proyectos/Proyecto 2/shape/COL.shp')%>%mutate(dam=as.integer(dam))
+
+#shp2 <- st_read('L:/Documentos/USTA/Semestre 3/Electiva I - Estimación en áreas pequeñas/Proyectos/Proyecto 2/shape/COL.shp')%>%mutate(dam=as.integer(dam))
+shp2 <- st_read('COL.shp')%>%mutate(dam=as.integer(dam))
 data_mapas = read.csv("df_para_mapas.csv")
 data_mapas=data_mapas %>% left_join(x=.,y=tot1%>%mutate(tot_dir=total)%>%
                          select(c("strato","tot_dir")),by="strato")
@@ -397,7 +403,7 @@ G2 <- ggplot() +
   theme_void()+ggtitle("Total de personas trabajando en zona urbana")
 (G1 | G2)
 
-#[8.1.2] ESTIMADORES FH RURAL Y URBANO------
+#[8.1.2] RURAL AND URBAN FH ESTIMATORS------
 #Rural
 tot_rur <- data_mapas%>%filter(clase=="rural")%>%mutate(dam=DP)%>%group_by(dam)%>%
   summarise(tot=sum(eblup.FH))
@@ -430,7 +436,7 @@ G4 <- ggplot() +
                        limits=c(4,3600))+labs(fill='Tot trabajando \n (miles)')+
   theme_void()+ggtitle("Total de personas trabajando en zona urbana")
 (G3 | G4)
-#[8.1.3] ESTIMADORES FH -----
+#[8.1.3] FH ESTIMATORS -----
 totl_dept <- data_mapas%>%mutate(dam=DP)%>%group_by(dam)%>%
   summarise(tot=sum(eblup.FH))
 shp=shp2%>%left_join(x=.,y=totl_dept,by="dam")%>%mutate(tot=round(tot/1000,2))
@@ -446,8 +452,8 @@ G5 <- ggplot() +
                        limits=c(17,3400))+labs(fill='Tot trabajando \n (miles)')+
   theme_void()#+ggtitle("Total de hombres trabajando")
 (G5)
-#[8.1.4] ESTIMADORES FH hombre y mujer------
-#Hombre
+#[8.1.4] FH ESTIMATORS male and female------
+#man
 tot_hom <- data_mapas%>%filter(sexo=="hombre")%>%mutate(dam=DP)%>%group_by(dam)%>%
   summarise(tot=sum(eblup.FH))
 shp=shp2%>%left_join(x=.,y=tot_hom,by="dam")%>%mutate(tot=round(tot/1000,2))
@@ -462,7 +468,7 @@ G6 <- ggplot() +
                        labels=c(7,350,700,1000,1300,1700),
                        limits=c(7,1700))+labs(fill='Tot trabajando \n (miles)')+
   theme_void()+ggtitle("Total de hombres trabajando")
-#Mujer
+#woman
 tot_muj <- data_mapas%>%filter(sexo=="mujer")%>%mutate(dam=DP)%>%group_by(dam)%>%
   summarise(tot=sum(eblup.FH))
 shp=shp2%>%left_join(x=.,y=tot_muj,by="dam")%>%mutate(tot=round(tot/1000,2))
@@ -478,3 +484,4 @@ G7 <- ggplot() +
                        limits=c(7,1700))+labs(fill='Tot trabajando \n (miles)')+
   theme_void()+ggtitle("Total de mujeres trabajando")
 (G6 | G7)
+
